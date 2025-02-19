@@ -20,6 +20,6 @@ public class Review extends BaseEntity{
     @JoinColumn(name = "movie")
     private Movie movie;
     @ManyToOne
-    @JoinColumn(name = "user")
-    private User user;
+    @JoinColumn(name = "userid")
+    private User userid;
 }

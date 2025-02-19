@@ -1,10 +1,11 @@
 package com.umutavci.imdb.domain.models.out;
 
+import com.umutavci.imdb.domain.models.Base;
 import lombok.Data;
 
 @Data
 
-public class ReviewResponse extends ResponseBase {
+public class Review extends Base {
     private Double rating;
     private String comment;
     private Long movieId;

@@ -1,11 +1,7 @@
 package com.umutavci.imdb.infrastructure.persistence.mapper;
 
 import com.umutavci.imdb.domain.models.in.ReviewInput;
-import com.umutavci.imdb.domain.models.in.UserInput;
-import com.umutavci.imdb.domain.models.out.ReviewResponse;
-import com.umutavci.imdb.domain.models.out.UserResponse;
-import com.umutavci.imdb.infrastructure.persistence.entities.Review;
-import com.umutavci.imdb.infrastructure.persistence.entities.User;
+import com.umutavci.imdb.domain.models.out.Review;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -17,6 +13,8 @@ public interface ReviewMapper {
     @Mapping(target = "id", ignore = true)
     Review toReview(ReviewInput input);
 
-    ReviewResponse toReviewResponse(Review Review);
+    Review toReviewResponse(Review Review);
 }
+
+
 

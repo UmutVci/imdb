@@ -2,7 +2,7 @@ type MovieResponse
 {
     id: Int!
     title:String!
-    releaseDate:LocalDate!
+    releaseDate:Date!
     genre:String
     rating:Int
     description:String
@@ -11,7 +11,7 @@ type MovieResponse
 input MovieInput
 {
     title:String!
-    releaseDate:LocalDate!
+    releaseDate:Date!
     genre:String
     rating:Int
     description:String

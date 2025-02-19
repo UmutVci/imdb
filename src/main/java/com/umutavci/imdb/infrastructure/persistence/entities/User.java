@@ -17,7 +17,7 @@ import java.util.List;
 public class User extends BaseEntity{
     private String username;
     private String email;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "userid", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Review> reviews;
 }

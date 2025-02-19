@@ -2,12 +2,12 @@ type DirectorResponse
 {
     id:Int!
     name:String!
-    birthdate:LocalDate!
+    birthdate:Date!
 }
 input DirectorInput
 {
     name: String!
-    birthDay: LocalDate!
+    birthDay: Date!
 }
 extend type Query
 {

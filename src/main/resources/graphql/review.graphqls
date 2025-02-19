@@ -4,7 +4,7 @@ type ReviewResponse
     rating:Int!
     comment:String
     movieId:Int!
-    user:User
+    userId:Int!
 }
 input ReviewInput
 {

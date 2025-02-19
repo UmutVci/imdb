@@ -1,8 +1,7 @@
 package com.umutavci.imdb.infrastructure.persistence.mapper;
 
 import com.umutavci.imdb.domain.models.in.UserInput;
-import com.umutavci.imdb.domain.models.out.UserResponse;
-import com.umutavci.imdb.infrastructure.persistence.entities.User;
+import com.umutavci.imdb.domain.models.out.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -14,6 +13,7 @@ public interface UserMapper {
     @Mapping(target = "id", ignore = true)
     User toUser(UserInput input);
 
-    UserResponse toUserResponse(User user);
+    User toUserResponse(User user);
 }
+
 
