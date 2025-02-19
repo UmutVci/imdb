@@ -1,0 +1,24 @@
+type UserResponse
+{
+    id:Int!
+    username:String!
+    email:String!
+}
+
+input UserInput
+{
+    email:String!
+    username:String!
+}
+extend type Query
+{
+    getUser(id : Int!) : UserResponse
+    getAllUser : [UserResponse!]!
+
+}
+extend type Mutation
+{
+    createUser(input : UserInput!) : UserResponse
+    deleteUser(id : Int!) : Boolean
+    updateUser(id : Int!, input :UserInput! ) : UserResponse
+}

@@ -1,0 +1,23 @@
+type ActorResponse
+{
+    id: Int!
+    name: String!
+    birthDay: LocalDate!
+}
+input ActorInput
+{
+    name: String!
+    birthDay: LocalDate!
+}
+extend type Query
+{
+    getActor(id : Int!) : ActorResponse
+    getAllActors : [ActorResponse!]!
+
+}
+extend type Mutation
+{
+    createActor(input : ActorInput!) : ActorResponse
+    deleteActor(id : Int!) : Boolean
+    updateActor(id : Int!, input :ActorInput! ) : ActorResponse
+}

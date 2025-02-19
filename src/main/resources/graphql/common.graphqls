@@ -1,0 +1,7 @@
+scalar LocalDate
+type Mutation{
+
+}
+type Query{
+
+}

@@ -1,0 +1,31 @@
+type MovieResponse
+{
+    id: Int!
+    title:String!
+    releaseDate:LocalDate!
+    genre:String
+    rating:Int
+    description:String
+    directorId:Int
+}
+input MovieInput
+{
+    title:String!
+    releaseDate:LocalDate!
+    genre:String
+    rating:Int
+    description:String
+    directorId:Int
+}
+extend type Query
+{
+    getMovie(id : MovieInput!) : MovieResponse
+    getAllMovies : [MovieResponse!]!
+
+}
+extend type Mutation
+{
+    createMovie(input : MovieInput!) : MovieResponse
+    deleteMovie(id : Int!) : Boolean
+    updateMovie(id : Int!, input :MovieInput! ) : MovieResponse
+}

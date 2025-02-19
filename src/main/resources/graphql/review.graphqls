@@ -1,0 +1,28 @@
+type ReviewResponse
+{
+    id:Int!
+    rating:Int!
+    comment:String
+    movieId:Int!
+    user:User
+}
+input ReviewInput
+{
+    rating:Int!
+    comment:String
+    movieId:Int!
+    userId:Int!
+}
+
+extend type Query
+{
+    getReview(id : Int!) : ReviewResponse
+    getAllReviews : [ReviewResponse!]!
+
+}
+extend type Mutation
+{
+    createReview(input : ReviewInput!) : ReviewResponse
+    deleteReview(id : Int!) : Boolean
+    updateReview(id : Int!, input :ReviewInput! ) : ReviewResponse
+}
