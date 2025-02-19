@@ -1,19 +1,23 @@
 package com.umutavci.imdb.infrastructure.persistence.mapper;
 
 import com.umutavci.imdb.domain.models.in.ReviewInput;
-import com.umutavci.imdb.domain.models.out.Review;
+import com.umutavci.imdb.domain.models.out.ReviewResponse;
+import com.umutavci.imdb.infrastructure.persistence.entities.Review;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = ReviewMapperHelper.class)
 public interface ReviewMapper {
     ReviewMapper INSTANCE = Mappers.getMapper(ReviewMapper.class);
-
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "movie", source = "movieId", qualifiedByName = "mapMovie")
+    @Mapping(target = "userid", source = "userId", qualifiedByName = "mapUser")
     Review toReview(ReviewInput input);
 
-    Review toReviewResponse(Review Review);
+    @Mapping(target = "movieId", expression="java(Review.getMovie().getId())")
+    @Mapping(target = "userId", expression="java(Review.getUserid().getId())")
+    ReviewResponse toReviewResponse(Review Review);
 }
 
 

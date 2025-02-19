@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @Data
 
-public class Movie extends Base {
+public class MovieResponse extends Base {
     private String title;
     private LocalDate releaseDate;
     private String genre;

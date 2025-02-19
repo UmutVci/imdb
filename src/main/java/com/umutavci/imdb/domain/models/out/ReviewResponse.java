@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 
-public class Review extends Base {
+public class ReviewResponse extends Base {
     private Double rating;
     private String comment;
     private Long movieId;
