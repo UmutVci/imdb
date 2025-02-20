@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,7 +99,7 @@ public class MovieAdapter implements IMovieRepository {
     public List<MovieResponse> sortMovieByDescName() {
         return movieJpaRepository.findAll()
                 .stream()
-                .sorted((m1, m2) -> m1.getTitle().compareTo(m2.getTitle()))
+                .sorted(Comparator.comparing(Movie::getTitle))
                 .map(movieMapper::toMovieResponse)
                 .toList();
     }
@@ -117,7 +118,7 @@ public class MovieAdapter implements IMovieRepository {
 
                     return new Object[] { m1, averageRating };
                 })
-                .sorted((entry1, entry2) -> Double.compare((double) entry2[1], (double) entry1[1])) // Yüksekten düşüğe sıralama
+                .sorted((entry1, entry2) -> Double.compare((double) entry2[1], (double) entry1[1]))
                 .map(entry -> (Movie) entry[0])
                 .map(movieMapper::toMovieResponse)
                 .toList();
