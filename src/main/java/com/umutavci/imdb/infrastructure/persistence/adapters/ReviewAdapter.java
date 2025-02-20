@@ -2,6 +2,7 @@ package com.umutavci.imdb.infrastructure.persistence.adapters;
 
 import com.umutavci.imdb.domain.models.in.ReviewInput;
 import com.umutavci.imdb.domain.models.out.ReviewResponse;
+import com.umutavci.imdb.domain.ports.repositories.IReviewRepository;
 import com.umutavci.imdb.infrastructure.persistence.entities.Review;
 import com.umutavci.imdb.infrastructure.persistence.mapper.ReviewMapper;
 import com.umutavci.imdb.infrastructure.persistence.repositories.MovieJpaRepository;
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class ReviewAdapter implements ICRUDAdapter<ReviewInput, ReviewResponse> {
+public class ReviewAdapter implements IReviewRepository {
 
     @Autowired
     private final ReviewJpaRepository reviewJpaRepository;

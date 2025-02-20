@@ -21,6 +21,9 @@ extend type Query
 {
     getMovie(id : MovieInput!) : MovieResponse
     getAllMovies : [MovieResponse!]!
+    searchMovieByName(name : String) : [MovieResponse!]!
+    sortMovieByDescName : [MovieResponse!]!
+    sortMovieByBetterReviewPoint : [MovieResponse!]!
 
 }
 extend type Mutation

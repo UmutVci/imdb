@@ -2,6 +2,7 @@ package com.umutavci.imdb.infrastructure.persistence.adapters;
 
 import com.umutavci.imdb.domain.models.in.DirectorInput;
 import com.umutavci.imdb.domain.models.out.DirectorResponse;
+import com.umutavci.imdb.domain.ports.repositories.IDirectorRepository;
 import com.umutavci.imdb.infrastructure.persistence.entities.Director;
 import com.umutavci.imdb.infrastructure.persistence.mapper.DirectorMapper;
 import com.umutavci.imdb.infrastructure.persistence.repositories.DirectorJpaRepository;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 @Service
-public class DirectorAdapter implements ICRUDAdapter<DirectorInput, DirectorResponse>{
+public class DirectorAdapter implements IDirectorRepository {
     @Autowired
     private final DirectorJpaRepository directorJpaRepository;
     @Autowired

@@ -2,6 +2,7 @@ package com.umutavci.imdb.infrastructure.persistence.adapters;
 
 import com.umutavci.imdb.domain.models.in.UserInput;
 import com.umutavci.imdb.domain.models.out.UserResponse;
+import com.umutavci.imdb.domain.ports.repositories.IUserRepository;
 import com.umutavci.imdb.infrastructure.persistence.entities.User;
 import com.umutavci.imdb.infrastructure.persistence.mapper.UserMapper;
 import com.umutavci.imdb.infrastructure.persistence.repositories.UserJpaRepository;
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class UserAdapter implements ICRUDAdapter<UserInput, UserResponse> {
+public class UserAdapter implements IUserRepository {
 
     @Autowired
     private final UserJpaRepository userJpaRepository;
