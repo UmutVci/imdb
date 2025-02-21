@@ -13,7 +13,7 @@ input UserInput
 extend type Query
 {
     getUser(id : Int!) : UserResponse
-    getAllUser : [UserResponse!]!
+    getAllUsers : [UserResponse!]!
 
 }
 extend type Mutation

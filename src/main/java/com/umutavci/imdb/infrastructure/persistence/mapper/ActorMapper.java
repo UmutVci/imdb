@@ -13,6 +13,8 @@ public interface ActorMapper {
     ActorMapper INSTANCE = Mappers.getMapper(ActorMapper.class);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
     Actor toActor(ActorInput input);
 
     ActorResponse toActorResponse(Actor actor);

@@ -13,6 +13,8 @@ public interface DirectorMapper {
     DirectorMapper INSTANCE = Mappers.getMapper(DirectorMapper.class);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
     Director toDirector(DirectorInput input);
 
     DirectorResponse toDirectorResponse(Director Director);

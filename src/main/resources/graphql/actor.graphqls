@@ -2,12 +2,12 @@ type ActorResponse
 {
     id: Int!
     name: String!
-    birthDay: Date!
+    birthDate: Date!
 }
 input ActorInput
 {
     name: String!
-    birthDay: Date!
+    birthDate: Date!
 }
 extend type Query
 {

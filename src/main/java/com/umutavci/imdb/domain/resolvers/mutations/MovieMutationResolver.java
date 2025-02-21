@@ -1,0 +1,31 @@
+package com.umutavci.imdb.domain.resolvers.mutations;
+
+import com.umutavci.imdb.application.services.MovieService;
+import com.umutavci.imdb.domain.models.in.MovieInput;
+import com.umutavci.imdb.domain.models.out.MovieResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
+import org.springframework.stereotype.Controller;
+
+@Controller
+public class MovieMutationResolver {
+    @Autowired
+    private final MovieService movieService;
+
+    public MovieMutationResolver(MovieService movieService) {
+        this.movieService = movieService;
+    }
+    @MutationMapping
+    public MovieResponse createMovie(@Argument MovieInput input){
+        return movieService.create(input);
+    }
+    @MutationMapping
+    public boolean deleteMovie(@Argument Long id){
+        return movieService.delete(id);
+    }
+    @MutationMapping
+    public MovieResponse updateMovie(@Argument Long id, @Argument MovieInput input){
+        return movieService.update(id, input);
+    }
+}

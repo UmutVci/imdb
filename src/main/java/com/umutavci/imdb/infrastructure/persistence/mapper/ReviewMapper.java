@@ -13,6 +13,8 @@ public interface ReviewMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "movie", source = "movieId", qualifiedByName = "mapMovie")
     @Mapping(target = "userid", source = "userId", qualifiedByName = "mapUser")
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
     Review toReview(ReviewInput input);
 
     @Mapping(target = "movieId", expression="java(Review.getMovie().getId())")

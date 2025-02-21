@@ -13,6 +13,8 @@ public interface MovieMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "director", source = "directorId", qualifiedByName = "mapDirector")
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
     Movie toMovie(MovieInput input);
 
     @Mapping(target = "directorId", expression="java(Movie.getDirector().getId())")

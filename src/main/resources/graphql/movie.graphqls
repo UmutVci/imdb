@@ -19,12 +19,11 @@ input MovieInput
 }
 extend type Query
 {
-    getMovie(id : MovieInput!) : MovieResponse
+    getMovie(id : Int!) : MovieResponse
     getAllMovies : [MovieResponse!]!
     searchMovieByName(name : String) : [MovieResponse!]!
     sortMovieByDescName : [MovieResponse!]!
     sortMovieByBetterReviewPoint : [MovieResponse!]!
-
 }
 extend type Mutation
 {
