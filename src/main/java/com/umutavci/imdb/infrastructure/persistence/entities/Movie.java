@@ -23,7 +23,7 @@ public class Movie extends BaseEntity{
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Review> reviewList;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "movie_actor",
             joinColumns = @JoinColumn(name = "movie_id"),

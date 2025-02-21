@@ -1,6 +1,7 @@
 package com.umutavci.imdb.domain.resolvers.queries;
 
 import com.umutavci.imdb.application.services.MovieService;
+import com.umutavci.imdb.domain.models.out.ActorResponse;
 import com.umutavci.imdb.domain.models.out.MovieResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -36,5 +37,9 @@ public class MovieQueryResolver {
     @QueryMapping
     public List<MovieResponse> sortMovieByBetterReviewPoint(){
         return movieService.sortMovieByBetterReviewPoint();
+    }
+    @QueryMapping
+    public List<ActorResponse> showAllActorsInMovie(@Argument Long movieId){
+        return movieService.showAllActorsInMovie(movieId);
     }
 }

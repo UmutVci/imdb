@@ -22,10 +22,13 @@ extend type Query
     searchMovieByName(name : String) : [MovieResponse!]!
     sortMovieByDescName : [MovieResponse!]!
     sortMovieByBetterReviewPoint : [MovieResponse!]!
+    showAllActorsInMovie(movieId : Int!) : [ActorResponse!]!
 }
 extend type Mutation
 {
     createMovie(input : MovieInput!) : MovieResponse
     deleteMovie(id : Int!) : Boolean
     updateMovie(id : Int!, input :MovieInput! ) : MovieResponse
+    addActorInMovie(movieId: Int!, actorId: Int!) : [ActorResponse!]!
+    removeActorInMovie(movieId:Int!, actorId : Int!) : [ActorResponse!]!
 }

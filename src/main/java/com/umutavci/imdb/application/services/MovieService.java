@@ -2,6 +2,7 @@ package com.umutavci.imdb.application.services;
 
 import com.umutavci.imdb.domain.models.in.DirectorInput;
 import com.umutavci.imdb.domain.models.in.MovieInput;
+import com.umutavci.imdb.domain.models.out.ActorResponse;
 import com.umutavci.imdb.domain.models.out.DirectorResponse;
 import com.umutavci.imdb.domain.models.out.MovieResponse;
 import com.umutavci.imdb.domain.ports.repositories.IBaseRepository;
@@ -33,4 +34,7 @@ public class MovieService implements BaseService<MovieInput, MovieResponse>{
     public List<MovieResponse> searchMovieByName(String name){ return repository.searchMovieByName(name); }
     public List<MovieResponse> sortMovieByDescName(){ return repository.sortMovieByDescName(); }
     public List<MovieResponse> sortMovieByBetterReviewPoint() { return repository.sortMovieByBetterReviewPoint(); }
+    public List<ActorResponse> addActorInMovie(Long movieId, Long actorId){ return repository.addActorInMovie(movieId, actorId); }
+    public List<ActorResponse> removeActorInMovie(Long movieId, Long actorId){ return repository.removeActorInMovie(movieId, actorId); }
+    public List<ActorResponse> showAllActorsInMovie(Long movieId){ return repository.showAllActorsInMovie(movieId); }
 }
