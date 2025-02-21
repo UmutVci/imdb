@@ -1,6 +1,7 @@
 package com.umutavci.imdb.domain.resolvers.queries;
 
 import com.umutavci.imdb.application.services.UserService;
+import com.umutavci.imdb.domain.models.in.LoginInput;
 import com.umutavci.imdb.domain.models.out.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -25,4 +26,5 @@ public class UserQueryResolver {
     public List<UserResponse> getAllUsers(){
         return userService.getAll();
     }
+
 }

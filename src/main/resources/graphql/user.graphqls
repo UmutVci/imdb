@@ -4,21 +4,28 @@ type UserResponse
     username:String!
     email:String!
 }
+input LoginInput
+{
+    email:String!
+    pass:String!
+}
 
 input UserInput
 {
     email:String!
     username:String!
+    pass:String!
 }
 extend type Query
 {
     getUser(id : Int!) : UserResponse
     getAllUsers : [UserResponse!]!
-
+    me : String
 }
 extend type Mutation
 {
     createUser(input : UserInput!) : UserResponse
     deleteUser(id : Int!) : Boolean
     updateUser(id : Int!, input :UserInput! ) : UserResponse
+    login(input : LoginInput!) : Boolean
 }

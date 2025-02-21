@@ -7,6 +7,7 @@ import com.umutavci.imdb.domain.models.out.UserResponse;
 import com.umutavci.imdb.domain.ports.repositories.IBaseRepository;
 import com.umutavci.imdb.domain.ports.repositories.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -7,9 +7,15 @@ import com.umutavci.imdb.infrastructure.persistence.entities.User;
 import com.umutavci.imdb.infrastructure.persistence.mapper.UserMapper;
 import com.umutavci.imdb.infrastructure.persistence.repositories.UserJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -21,9 +27,13 @@ public class UserAdapter implements IUserRepository {
     @Autowired
     private final UserMapper userMapper;
 
-    public UserAdapter(UserJpaRepository userJpaRepository, UserMapper userMapper) {
+    @Autowired
+    private final PasswordEncoder passwordEncoder;
+
+    public UserAdapter(UserJpaRepository userJpaRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
         this.userJpaRepository = userJpaRepository;
         this.userMapper = userMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -56,6 +66,7 @@ public class UserAdapter implements IUserRepository {
                 .orElseThrow(() -> new RuntimeException("User not found"));
         user.setUsername(userInput.getUsername());
         user.setEmail(userInput.getEmail());
+        user.setPass(passwordEncoder.encode(userInput.getPass()));
         user.setUpdatedAt(LocalDateTime.now());
         User savedUser = userJpaRepository.save(user);
         return userMapper.toUserResponse(savedUser);

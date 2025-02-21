@@ -20,4 +20,5 @@ public class User extends BaseEntity{
     @OneToMany(mappedBy = "userid", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Review> reviews;
+    private String pass;
 }

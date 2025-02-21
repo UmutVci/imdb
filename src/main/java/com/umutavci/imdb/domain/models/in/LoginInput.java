@@ -4,9 +4,7 @@ import com.umutavci.imdb.domain.models.Base;
 import lombok.Data;
 
 @Data
-
-public class UserInput extends Base {
-    private String username;
+public class LoginInput extends Base {
     private String email;
     private String pass;
 }
