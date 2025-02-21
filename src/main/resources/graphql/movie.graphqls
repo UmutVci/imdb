@@ -4,7 +4,6 @@ type MovieResponse
     title:String!
     releaseDate:Date!
     genre:String
-    rating:Int
     description:String
     directorId:Int
 }
@@ -13,7 +12,6 @@ input MovieInput
     title:String!
     releaseDate:Date!
     genre:String
-    rating:Int
     description:String
     directorId:Int
 }

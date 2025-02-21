@@ -6,12 +6,10 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-
 public class MovieInput extends Base {
     private String title;
     private LocalDate releaseDate;
     private String genre;
-    private Double rating;
     private String description;
     private Long directorId;
 }

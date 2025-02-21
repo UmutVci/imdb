@@ -6,8 +6,8 @@ type DirectorResponse
 }
 input DirectorInput
 {
-    name: String!
-    birthDate: Date!
+    name: String
+    birthDate: Date
 }
 extend type Query
 {

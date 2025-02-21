@@ -17,6 +17,7 @@ public interface DirectorMapper {
     @Mapping(target = "updatedAt", ignore = true)
     Director toDirector(DirectorInput input);
 
+    @Mapping(target = "birthDate", source="birthDate")
     DirectorResponse toDirectorResponse(Director Director);
 }
 

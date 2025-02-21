@@ -72,7 +72,6 @@ public class MovieAdapter implements IMovieRepository {
         movie.setDescription(movieInput.getDescription());
         movie.setDirector(directorJpaRepository.findById(movieInput.getDirectorId()).orElseThrow());
         movie.setGenre(movieInput.getGenre());
-        movie.setRating(movieInput.getRating());
         movie.setUpdatedAt(LocalDateTime.now());
         Movie savedMovie = movieJpaRepository.save(movie);
         return movieMapper.toMovieResponse(savedMovie);

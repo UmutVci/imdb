@@ -16,7 +16,6 @@ public class Movie extends BaseEntity{
     private String title;
     private LocalDate releaseDate;
     private String genre;
-    private Double rating;
     private String description;
     @ManyToOne
     @JoinColumn(name = "director")
