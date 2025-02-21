@@ -16,7 +16,6 @@ public interface MovieMapper {
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     Movie toMovie(MovieInput input);
-
     @Mapping(target = "directorId", expression="java(Movie.getDirector().getId())")
     MovieResponse toMovieResponse(Movie Movie);
 }

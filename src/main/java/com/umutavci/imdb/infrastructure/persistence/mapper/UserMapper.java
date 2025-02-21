@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
+
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "id", ignore = true)

@@ -14,7 +14,7 @@ import java.util.List;
 public class Actor extends BaseEntity{
     private String name;
     private LocalDate birthDate;
-    @ManyToMany
-    private List<Movie> movieList;
+    @ManyToMany(mappedBy = "actors")
+    private List<Movie> movies;
 
 }

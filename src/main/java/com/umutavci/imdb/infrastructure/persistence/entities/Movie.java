@@ -23,5 +23,12 @@ public class Movie extends BaseEntity{
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Review> reviewList;
+    @ManyToMany
+    @JoinTable(
+            name = "movie_actor",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "actor_id")
+    )
+    private List<Actor> actors;
 
 }
