@@ -18,10 +18,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+
 
 @Service
 public class MovieAdapter implements IMovieRepository {
@@ -115,20 +113,15 @@ public class MovieAdapter implements IMovieRepository {
 
     @Override
     public List<MovieResponse> sortMovieByBetterReviewPoint() {
+
         return movieJpaRepository.findAll()
                 .stream()
-                .map(m1 -> {
-                    double averageRating = reviewJpaRepository.findAll()
-                            .stream()
-                            .filter(x -> x.getMovie().getId() == m1.getId())
-                            .mapToDouble(Review::getRating)
-                            .average()
-                            .orElse(0.0);
-
-                    return new Object[] { m1, averageRating };
+                .sorted(new Comparator<Movie>() {
+                    @Override
+                    public int compare(Movie o1, Movie o2) {
+                        return findAverageRankingInMovie(o2.getId()).compareTo(findAverageRankingInMovie(o1.getId()));
+                    }
                 })
-                .sorted((entry1, entry2) -> Double.compare((double) entry2[1], (double) entry1[1]))
-                .map(entry -> (Movie) entry[0])
                 .map(movieMapper::toMovieResponse)
                 .toList();
     }
@@ -163,6 +156,19 @@ public class MovieAdapter implements IMovieRepository {
                 .getActors()
                 .stream().map(actorMapper::toActorResponse)
                 .toList();
+    }
+
+    @Override
+    public Double findAverageRankingInMovie(Long movieId) {
+        List<Review> reviews = reviewJpaRepository
+                .findAll()
+                .stream()
+                .filter(m -> m.getMovie().getId() == movieId)
+                .toList();
+        double sum = reviews.stream()
+                .mapToDouble(Review::getRating)
+                .sum();
+        return sum / reviews.size();
     }
 
 }

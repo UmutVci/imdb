@@ -13,4 +13,5 @@ public interface IMovieRepository extends IBaseRepository<MovieInput, MovieRespo
     List<ActorResponse> addActorInMovie(Long movieId, Long actorId);
     List<ActorResponse> removeActorInMovie(Long movieId, Long actorId);
     List<ActorResponse> showAllActorsInMovie(Long movieId);
+    Double findAverageRankingInMovie(Long movieId);
 }

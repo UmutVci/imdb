@@ -23,6 +23,7 @@ extend type Query
     sortMovieByDescName : [MovieResponse!]!
     sortMovieByBetterReviewPoint : [MovieResponse!]!
     showAllActorsInMovie(movieId : Int!) : [ActorResponse!]!
+    findAverageRankingInMovie(movieId : Int!) : Int!
 }
 extend type Mutation
 {

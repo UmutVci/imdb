@@ -37,4 +37,5 @@ public class MovieService implements BaseService<MovieInput, MovieResponse>{
     public List<ActorResponse> addActorInMovie(Long movieId, Long actorId){ return repository.addActorInMovie(movieId, actorId); }
     public List<ActorResponse> removeActorInMovie(Long movieId, Long actorId){ return repository.removeActorInMovie(movieId, actorId); }
     public List<ActorResponse> showAllActorsInMovie(Long movieId){ return repository.showAllActorsInMovie(movieId); }
+    public Double findAverageRankingInMovie(Long movieId){ return repository.findAverageRankingInMovie(movieId); }
 }

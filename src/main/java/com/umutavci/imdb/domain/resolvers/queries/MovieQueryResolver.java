@@ -42,4 +42,8 @@ public class MovieQueryResolver {
     public List<ActorResponse> showAllActorsInMovie(@Argument Long movieId){
         return movieService.showAllActorsInMovie(movieId);
     }
+    @QueryMapping
+    public Double findAverageRankingInMovie(@Argument Long movieId){
+        return movieService.findAverageRankingInMovie(movieId);
+    }
 }
