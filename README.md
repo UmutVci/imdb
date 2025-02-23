@@ -110,13 +110,13 @@ Docker is used to containerize the application. To run the project inside a Dock
 1. Build the Docker image:
 
    ```bash
-   docker build -t imdb-api .
+   docker build -t spring_app .
    ```
 
 2. Run the Docker container:
 
    ```bash
-   docker run -p 8080:8080 imdb-api
+   docker run -p 8080:8080 spring_app
    ```
 
 ## Hexagonal Architecture
