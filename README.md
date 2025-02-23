@@ -76,6 +76,7 @@ To get a local copy up and running, follow these simple steps.
     - `getMovie(id: Int!): MovieResponse`
     - `me: String` (For logged-in users to fetch their information)
 
+You can look .graphqls schemas for all endpoints.
 ## User Authentication
 
 This project includes user authentication via **Spring Security**:
