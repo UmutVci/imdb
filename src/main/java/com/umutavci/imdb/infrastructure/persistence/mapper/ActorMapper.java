@@ -4,18 +4,36 @@ import com.umutavci.imdb.domain.models.in.ActorInput;
 
 import com.umutavci.imdb.domain.models.out.ActorResponse;
 import com.umutavci.imdb.infrastructure.persistence.entities.Actor;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
+import org.springframework.stereotype.Component;
 
-@Mapper(componentModel = "spring")
-public interface ActorMapper {
-    ActorMapper INSTANCE = Mappers.getMapper(ActorMapper.class);
+@Component
+public class ActorMapper {
+    public Actor toActor(ActorInput input) {
+        if ( input == null ) {
+            return null;
+        }
 
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
-    Actor toActor(ActorInput input);
+        Actor actor = new Actor();
 
-    ActorResponse toActorResponse(Actor actor);
+        actor.setName( input.getName() );
+        actor.setBirthDate( input.getBirthDate() );
+
+        return actor;
+    }
+
+    public ActorResponse toActorResponse(Actor actor) {
+        if ( actor == null ) {
+            return null;
+        }
+
+        ActorResponse actorResponse = new ActorResponse();
+
+        actorResponse.setId( actor.getId() );
+        actorResponse.setCreatedAt( actor.getCreatedAt() );
+        actorResponse.setUpdatedAt( actor.getUpdatedAt() );
+        actorResponse.setName( actor.getName() );
+        actorResponse.setBirthDate( actor.getBirthDate() );
+
+        return actorResponse;
+    }
 }

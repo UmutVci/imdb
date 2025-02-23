@@ -4,21 +4,39 @@ import com.umutavci.imdb.domain.models.in.DirectorInput;
 
 import com.umutavci.imdb.domain.models.out.DirectorResponse;
 import com.umutavci.imdb.infrastructure.persistence.entities.Director;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
+import org.springframework.stereotype.Component;
 
-@Mapper(componentModel = "spring")
-public interface DirectorMapper {
-    DirectorMapper INSTANCE = Mappers.getMapper(DirectorMapper.class);
+@Component
 
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
-    Director toDirector(DirectorInput input);
+public class DirectorMapper {
+    public Director toDirector(DirectorInput input) {
+        if ( input == null ) {
+            return null;
+        }
 
-    @Mapping(target = "birthDate", source="birthDate")
-    DirectorResponse toDirectorResponse(Director Director);
+        Director director = new Director();
+
+        director.setName( input.getName() );
+        director.setBirthDate( input.getBirthDate() );
+
+        return director;
+    }
+
+    public DirectorResponse toDirectorResponse(Director Director) {
+        if ( Director == null ) {
+            return null;
+        }
+
+        DirectorResponse directorResponse = new DirectorResponse();
+
+        directorResponse.setBirthDate( Director.getBirthDate() );
+        directorResponse.setId( Director.getId() );
+        directorResponse.setCreatedAt( Director.getCreatedAt() );
+        directorResponse.setUpdatedAt( Director.getUpdatedAt() );
+        directorResponse.setName( Director.getName() );
+
+        return directorResponse;
+    }
 }
 
 

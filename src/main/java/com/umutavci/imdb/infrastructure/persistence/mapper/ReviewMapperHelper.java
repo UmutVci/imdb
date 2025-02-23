@@ -4,7 +4,6 @@ import com.umutavci.imdb.infrastructure.persistence.entities.Movie;
 import com.umutavci.imdb.infrastructure.persistence.entities.User;
 import com.umutavci.imdb.infrastructure.persistence.repositories.MovieJpaRepository;
 import com.umutavci.imdb.infrastructure.persistence.repositories.UserJpaRepository;
-import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,11 +19,9 @@ public class ReviewMapperHelper {
         this.movieJpaRepository = movieJpaRepository;
         this.userJpaRepository = userJpaRepository;
     }
-    @Named("mapMovie")
     public Movie mapMovie(Long movieId) {
         return movieJpaRepository.findById(movieId).orElseThrow(() -> new RuntimeException("Movie not found"));
     }
-    @Named("mapUser")
     public User mapUser(Long userId) {
         return userJpaRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
     }

@@ -5,11 +5,12 @@ import com.umutavci.imdb.domain.models.out.ActorResponse;
 import com.umutavci.imdb.domain.ports.repositories.IActorRepository;
 import com.umutavci.imdb.domain.ports.repositories.IBaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+@Component
 public class ActorService implements BaseService<ActorInput, ActorResponse>{
     @Autowired
     private final IActorRepository repository;
