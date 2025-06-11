@@ -17,15 +17,13 @@ import java.util.List;
 @Service
 public class ReviewAdapter implements IReviewRepository {
 
-    @Autowired
-    private final ReviewJpaRepository reviewJpaRepository;
+    private  ReviewJpaRepository reviewJpaRepository;
 
-    @Autowired
-    private final ReviewMapper reviewMapper;
+    private  ReviewMapper reviewMapper;
 
-    private final MovieJpaRepository movieJpaRepository;
+    private  MovieJpaRepository movieJpaRepository;
 
-    private final UserJpaRepository userJpaRepository;
+    private  UserJpaRepository userJpaRepository;
 
     public ReviewAdapter(ReviewJpaRepository reviewJpaRepository, ReviewMapper reviewMapper, MovieJpaRepository movieJpaRepository, UserJpaRepository userJpaRepository) {
         this.reviewJpaRepository = reviewJpaRepository;

@@ -205,4 +205,5 @@ public class MovieGraphQLApiTest {
             return actorMap.get("id").equals(actorId);
         }), "Actor with ID " + actorId + " should be removed from the movie");
     }
+
 }

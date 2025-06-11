@@ -1,108 +1,141 @@
 package imdb;
 
-import com.umutavci.imdb.ImdbApplication;
+import com.umutavci.imdb.infrastructure.persistence.entities.Director;
+import com.umutavci.imdb.infrastructure.persistence.repositories.DirectorJpaRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.graphql.tester.AutoConfigureHttpGraphQlTester;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.graphql.test.tester.HttpGraphQlTester;
-import org.springframework.test.context.TestPropertySource;
+import org.springframework.security.test.context.support.WithMockUser;
 
-import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.time.LocalDate;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = ImdbApplication.class)
+import static org.assertj.core.api.Assertions.assertThat;
+@WithMockUser(username = "rev@example.com", roles = "USER")
+@SpringBootTest(
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+        classes = TestApplication.class   // <–– Burada TestApplication kullanıyoruz
+)
 @AutoConfigureHttpGraphQlTester
-@Import(TestSecurityConfig.class)
-@TestPropertySource(properties = "spring.security.enabled=false")
 public class ReviewGraphQLApiTest {
 
     @Autowired
     private HttpGraphQlTester graphQlTester;
 
-    private Integer testReviewId;
+    @Autowired
+    private DirectorJpaRepository directorRepo;     // ← Director repo
+
+    private Integer testReviewerId;
+    private Integer testDirectorId;
     private Integer testMovieId;
-    private Integer testUserId;
+    private Integer testReviewId;
 
     @BeforeEach
-    public void setUp() {
-        String createUser = "mutation { createUser(input: { username: \"testuser\", email: \"test@example.com\", pass: \"pass\" }) { id } }";
-        testUserId = graphQlTester.document(createUser).execute().path("createUser.id").entity(Integer.class).get();
-
-        String createMovie = "mutation { createMovie(input: { title: \"Test Movie\", releaseDate: \"2020-01-01\", genre: \"Action\", description: \"A test movie\" }) { id } }";
-        testMovieId = graphQlTester.document(createMovie).execute().path("createMovie.id").entity(Integer.class).get();
-
-        String createReview = """
+    void setUp() {
+        // 1) Review yazacak user
+        testReviewerId = graphQlTester.document("""
             mutation {
-                createReview(input: { rating: 5, comment: "Great movie", movieId: %d, userId: %d }) {
-                    id
-                    rating
-                }
+              createUser(input: {
+                username: "reviewer",
+                email:    "rev@example.com",
+                pass:     "pass123"
+              }) { id }
             }
-        """.formatted(testMovieId, testUserId);
-        testReviewId = graphQlTester.document(createReview).execute().path("createReview.id").entity(Integer.class).get();
-    }
+        """)
+                .execute()
+                .path("createUser.id").entity(Integer.class).get();
 
-    @Test
-    public void testGetReview() {
-        String query = "query { getReview(id: " + testReviewId + ") { id rating comment movieId userId } }";
-        HttpGraphQlTester.Response response = graphQlTester.document(query).execute();
+        // 2) Director entity’yi doğrudan repoya kaydet
+        Director director = new Director();
+        director.setName("Test Director");
+        director.setBirthDate(LocalDate.of(1970, 7, 30));
+        Director saved = directorRepo.save(director);
+        testDirectorId = saved.getId().intValue();
 
-        response.path("getReview.id").entity(Integer.class).isEqualTo(testReviewId);
-        response.path("getReview.rating").entity(Integer.class).isEqualTo(5);
-        response.path("getReview.comment").entity(String.class).isEqualTo("Great movie");
-        response.path("getReview.movieId").entity(Integer.class).isEqualTo(testMovieId);
-        response.path("getReview.userId").entity(Integer.class).isEqualTo(testUserId);
-    }
-
-    @Test
-    public void testGetAllReviews() {
-        String query = "query { getAllReviews { id rating } }";
-        List<?> reviews = graphQlTester.document(query).execute().path("getAllReviews").entityList(Object.class).get();
-        assertTrue(reviews.size() > 0, "Reviews list should have at least one review");
-    }
-
-    @Test
-
-
-    public void testCreateReview() {
-        String mutation = """
+        // 3) Film oluştururken gerçek directorId kullan
+        testMovieId = graphQlTester.document(String.format("""
             mutation {
-                createReview(input: { rating: 4, comment: "Good movie", movieId: %d, userId: %d }) {
-                    id
-                    rating
-                }
+              createMovie(input: {
+                title:       "Test Movie",
+                releaseDate: "2020-01-01",
+                genre:       "Drama",
+                description: "A wonderful test movie",
+                directorId:  %d
+              }) { id }
             }
-        """.formatted(testMovieId, testUserId);
-        HttpGraphQlTester.Response response = graphQlTester.document(mutation).execute();
+        """, testDirectorId))
+                .execute()
+                .path("createMovie.id").entity(Integer.class).get();
 
-        response.path("createReview.id").entity(Integer.class).matches(id -> id > 0);
-        response.path("createReview.rating").entity(Integer.class).isEqualTo(4);
-    }
-
-    @Test
-    public void testUpdateReview() {
-        String mutation = """
+        // 4) Review oluştur
+        testReviewId = graphQlTester.document(String.format("""
             mutation {
-                updateReview(id: %d, input: { rating: 3, comment: "Okay movie", movieId: %d, userId: %d }) {
-                    id
-                    rating
-                }
+              createReview(input: {
+                rating:  5,
+                comment: "Excellent!",
+                movieId: %d,
+                userId:  %d
+              }) { id }
             }
-        """.formatted(testReviewId, testMovieId, testUserId);
-        HttpGraphQlTester.Response response = graphQlTester.document(mutation).execute();
-
-        response.path("updateReview.id").entity(Integer.class).isEqualTo(testReviewId);
-        response.path("updateReview.rating").entity(Integer.class).isEqualTo(3);
+        """, testMovieId, testReviewerId))
+                .execute()
+                .path("createReview.id").entity(Integer.class).get();
     }
 
     @Test
-    public void testDeleteReview() {
-        String mutation = "mutation { deleteReview(id: " + testReviewId + ") }";
-        HttpGraphQlTester.Response response = graphQlTester.document(mutation).execute();
-        response.path("deleteReview").entity(Boolean.class).isEqualTo(true);
+    void testGetReview() {
+        graphQlTester.document(String.format("""
+            query {
+              getReview(id: %d) {
+                id rating comment movieId userId
+              }
+            }
+        """, testReviewId))
+                .execute()
+                .path("getReview.id").entity(Integer.class).isEqualTo(testReviewId)
+                .path("getReview.rating").entity(Integer.class).isEqualTo(5)
+                .path("getReview.comment").entity(String.class).isEqualTo("Excellent!")
+                .path("getReview.movieId").entity(Integer.class).isEqualTo(testMovieId)
+                .path("getReview.userId").entity(Integer.class).isEqualTo(testReviewerId);
+    }
+
+    @Test
+    void testGetAllReviews() {
+        graphQlTester.document("""
+            query { getAllReviews { id rating } }
+        """)
+                .execute()
+                .path("getAllReviews[*].id")
+                .entityList(Integer.class)
+                .satisfies(list -> assertThat(list).contains(testReviewId));
+    }
+
+    @Test
+    void testUpdateReview() {
+        graphQlTester.document(String.format("""
+            mutation {
+              updateReview(id: %d, input: {
+                rating:  3,
+                comment: "It was okay",
+                movieId: %d,
+                userId:  %d
+              }) { id rating comment }
+            }
+        """, testReviewId, testMovieId, testReviewerId))
+                .execute()
+                .path("updateReview.rating").entity(Integer.class).isEqualTo(3)
+                .path("updateReview.comment").entity(String.class).isEqualTo("It was okay");
+    }
+
+    @Test
+    void testDeleteReview() {
+        graphQlTester.document(String.format("""
+            mutation { deleteReview(id: %d) }
+        """, testReviewId))
+                .execute()
+                .path("deleteReview").entity(Boolean.class).isEqualTo(true);
     }
 }
